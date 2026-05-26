@@ -1,0 +1,29 @@
+<view class="container">
+  <view class="section-title">咨询师：{{teacherName}}</view>
+
+  <view class="toolbar">
+    <van-button type="primary" size="small" round bind:click="goAdd">新增档期</van-button>
+  </view>
+
+  <van-loading wx:if="{{loading}}" size="24px" vertical>加载中...</van-loading>
+
+  <view wx:elif="{{list.length}}" class="card">
+    <view
+      wx:for="{{list}}"
+      wx:key="_id"
+      class="slot-item"
+      data-id="{{item._id}}"
+      bindtap="goEdit"
+    >
+      <view class="slot-main">
+        <text class="slot-time">{{item.date}} {{item.start_time}}-{{item.end_time}}</text>
+        <text class="slot-meta">{{typeLabel[item.type]}} · 已约 {{item.booked_count || 0}}/{{item.capacity}}</text>
+      </view>
+      <van-tag wx:if="{{item.status === 'open'}}" type="success" size="medium">{{slotStatusLabel.open}}</van-tag>
+      <van-tag wx:elif="{{item.status === 'full'}}" type="warning" size="medium">{{slotStatusLabel.full}}</van-tag>
+      <van-tag wx:else type="default" size="medium">{{slotStatusLabel.closed}}</van-tag>
+    </view>
+  </view>
+
+  <van-empty wx:else class="empty-wrap" description="暂无档期，请先新增" />
+</view>

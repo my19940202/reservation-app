@@ -8,11 +8,13 @@ Page({
     keyword: '',
     list: [],
     loading: true,
+    mode: '',
     typeLabel: CONSULT_TYPE_LABEL,
   },
 
-  onLoad() {
+  onLoad(options) {
     if (!requireRole([ROLE.ADMIN])) return;
+    this.setData({ mode: options.mode || '' });
     this.loadList();
   },
 
@@ -50,5 +52,12 @@ Page({
   goEdit(e) {
     const { id } = e.currentTarget.dataset;
     wx.navigateTo({ url: `/pages/admin/teacher-edit/index?id=${id}` });
+  },
+
+  goSlots(e) {
+    const { id, name } = e.currentTarget.dataset;
+    wx.navigateTo({
+      url: `/pages/admin/time-slots/index?teacherId=${id}&teacherName=${encodeURIComponent(name || '')}`,
+    });
   },
 });

@@ -50,4 +50,8 @@ Page({
   goTeacherManagement() {
     wx.navigateTo({ url: '/pages/admin/teachers/index' });
   },
+
+  goTimeSlots() {
+    wx.navigateTo({ url: '/pages/admin/teachers/index?mode=slots' });
+  },
 });

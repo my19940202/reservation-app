@@ -111,6 +111,129 @@ async function updateTeacher(data) {
   return { success: true };
 }
 
+function normalizeSlotPayload(data) {
+  const teacherId = data.teacherId || data.teacher_id;
+  const date = data.date;
+  const start_time = data.start_time;
+  const end_time = data.end_time;
+  const type = data.type || 'oneToOne';
+
+  if (!teacherId) throw new Error('缺少咨询师 ID');
+  if (!date || !start_time || !end_time) throw new Error('请填写完整时段信息');
+  if (start_time >= end_time) throw new Error('结束时间须晚于开始时间');
+
+  let capacity = data.capacity;
+  if (type === 'oneToOne') {
+    capacity = 1;
+  } else if (!capacity || Number(capacity) < 1) {
+    throw new Error('一对多名额至少为 1');
+  } else {
+    capacity = Number(capacity);
+  }
+
+  return { teacherId, date, start_time, end_time, type, capacity };
+}
+
+async function listTimeSlots(teacherId, fromDate) {
+  if (!teacherId) throw new Error('缺少咨询师 ID');
+  const query = { teacher_id: teacherId };
+  if (fromDate) query.date = _.gte(fromDate);
+  const res = await db
+    .collection(C.TIME_SLOTS)
+    .where(query)
+    .orderBy('date', 'asc')
+    .orderBy('start_time', 'asc')
+    .limit(200)
+    .get();
+  return { list: res.data || [] };
+}
+
+async function getTimeSlotById(slotId) {
+  if (!slotId) throw new Error('缺少档期 ID');
+  const res = await db.collection(C.TIME_SLOTS).doc(slotId).get();
+  if (!res.data) throw new Error('档期不存在');
+  return { slot: res.data };
+}
+
+async function addTimeSlot(data) {
+  const payload = normalizeSlotPayload(data);
+  const teacherRes = await db.collection(C.TEACHERS).doc(payload.teacherId).get();
+  if (!teacherRes.data) throw new Error('咨询师不存在');
+
+  const res = await db.collection(C.TIME_SLOTS).add({
+    data: {
+      teacher_id: payload.teacherId,
+      date: payload.date,
+      start_time: payload.start_time,
+      end_time: payload.end_time,
+      type: payload.type,
+      capacity: payload.capacity,
+      booked_count: 0,
+      status: 'open',
+      created_at: db.serverDate(),
+      updated_at: db.serverDate(),
+    },
+  });
+  return { slotId: res._id };
+}
+
+async function updateTimeSlot(data) {
+  const { slotId, status, capacity } = data;
+  if (!slotId) throw new Error('缺少档期 ID');
+
+  const slotRes = await db.collection(C.TIME_SLOTS).doc(slotId).get();
+  const slot = slotRes.data;
+  if (!slot) throw new Error('档期不存在');
+
+  const bookedCount = slot.booked_count || 0;
+  const updateData = { updated_at: db.serverDate() };
+
+  if (bookedCount > 0) {
+    if (capacity !== undefined && capacity !== null && capacity !== '') {
+      const newCap = Number(capacity);
+      if (Number.isNaN(newCap) || newCap < bookedCount) {
+        throw new Error(`名额不能小于已预约数 ${bookedCount}`);
+      }
+      updateData.capacity = newCap;
+    }
+
+    const finalCap =
+      updateData.capacity !== undefined ? updateData.capacity : slot.capacity || 1;
+
+    if (status === 'closed') {
+      updateData.status = 'closed';
+    } else {
+      updateData.status = bookedCount >= finalCap ? 'full' : 'open';
+    }
+  } else {
+    const payload = normalizeSlotPayload({
+      ...slot,
+      ...data,
+      teacherId: data.teacherId || slot.teacher_id,
+    });
+    updateData.teacher_id = payload.teacherId;
+    updateData.date = payload.date;
+    updateData.start_time = payload.start_time;
+    updateData.end_time = payload.end_time;
+    updateData.type = payload.type;
+    updateData.capacity = payload.capacity;
+    updateData.status = status === 'closed' ? 'closed' : 'open';
+  }
+
+  await db.collection(C.TIME_SLOTS).doc(slotId).update({ data: updateData });
+  return { success: true };
+}
+
+async function deleteTimeSlot(slotId) {
+  if (!slotId) throw new Error('缺少档期 ID');
+  const slotRes = await db.collection(C.TIME_SLOTS).doc(slotId).get();
+  const slot = slotRes.data;
+  if (!slot) throw new Error('档期不存在');
+  if ((slot.booked_count || 0) > 0) throw new Error('已有预约的档期不可删除');
+  await db.collection(C.TIME_SLOTS).doc(slotId).remove();
+  return { success: true };
+}
+
 async function updateAppointment(openId, data) {
   const { appointmentId, status, adminNote } = data;
   const apptRes = await db.collection(C.APPOINTMENTS).doc(appointmentId).get();
@@ -209,6 +332,16 @@ exports.main = async (event) => {
         return await addTeacher(event);
       case 'updateTeacher':
         return await updateTeacher(event);
+      case 'listTimeSlots':
+        return await listTimeSlots(event.teacherId, event.fromDate);
+      case 'getTimeSlotById':
+        return await getTimeSlotById(event.slotId);
+      case 'addTimeSlot':
+        return await addTimeSlot(event);
+      case 'updateTimeSlot':
+        return await updateTimeSlot(event);
+      case 'deleteTimeSlot':
+        return await deleteTimeSlot(event.slotId);
       default:
         return { error: 'Invalid action' };
     }

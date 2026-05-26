@@ -1,0 +1,76 @@
+<view class="container">
+  <van-loading wx:if="{{loading}}" size="24px" vertical>加载中...</van-loading>
+
+  <view wx:else class="card content">
+    <van-cell title="咨询师" value="{{teacherName}}" />
+
+    <van-cell
+      wx:if="{{!locked}}"
+      title="日期"
+      value="{{date || '请选择'}}"
+      is-link
+      bind:click="openCalendar"
+    />
+    <van-cell wx:else title="日期" value="{{date}}" />
+
+    <picker wx:if="{{!locked}}" mode="time" value="{{startTime}}" bindchange="onStartTimeChange">
+      <van-cell title="开始时间" value="{{startTime}}" is-link />
+    </picker>
+    <van-cell wx:else title="开始时间" value="{{startTime}}" />
+
+    <picker wx:if="{{!locked}}" mode="time" value="{{endTime}}" bindchange="onEndTimeChange">
+      <van-cell title="结束时间" value="{{endTime}}" is-link />
+    </picker>
+    <van-cell wx:else title="结束时间" value="{{endTime}}" />
+
+    <view wx:if="{{!locked}}" class="type-tabs">
+      <van-tabs active="{{consultType === 'oneToOne' ? 0 : 1}}" bind:change="onTypeChange">
+        <van-tab title="一对一" name="oneToOne" />
+        <van-tab title="一对多" name="group" />
+      </van-tabs>
+    </view>
+    <van-cell wx:else title="咨询类型" value="{{consultType === 'oneToOne' ? '一对一' : '一对多'}}" />
+
+    <van-field
+      value="{{capacity}}"
+      label="名额上限"
+      type="digit"
+      disabled="{{consultType === 'oneToOne'}}"
+      placeholder="请输入名额"
+      bind:change="onCapacityChange"
+    />
+
+    <van-cell wx:if="{{locked}}" title="已预约" value="{{bookedCount}} 人" />
+
+    <van-cell title="开放预约" center>
+      <van-switch checked="{{status !== 'closed'}}" size="24px" bind:change="onStatusChange" />
+    </van-cell>
+
+    <view wx:if="{{locked}}" class="hint">已有预约：不可修改日期与时间，仅可调整名额或关闭档期</view>
+
+    <view class="button-container">
+      <van-button type="primary" block round loading="{{submitting}}" bind:click="onSubmit">
+        保存
+      </van-button>
+      <van-button
+        wx:if="{{id && bookedCount === 0}}"
+        block
+        round
+        plain
+        type="danger"
+        loading="{{deleting}}"
+        custom-class="delete-btn"
+        bind:click="onDelete"
+      >
+        删除档期
+      </van-button>
+    </view>
+  </view>
+
+  <van-calendar
+    show="{{showCalendar}}"
+    min-date="{{minDate}}"
+    bind:close="closeCalendar"
+    bind:confirm="onCalendarConfirm"
+  />
+</view>

@@ -5,10 +5,20 @@
     <text class="profile-role">{{userInfo.role === 'admin' ? '管理员' : userInfo.role === 'teacher' ? '咨询师' : '用户'}}</text>
   </view>
 
-  <view wx:if="{{userPackage}}" class="card package-summary">
-    <van-cell title="一对一剩余" value="{{userPackage.one_to_one_remaining || 0}} 次" />
-    <van-cell title="一对多剩余" value="{{userPackage.group_remaining || 0}} 次" />
-  </view>
+  <!-- <view class="card package-card">
+    <view class="package-title">我的咨询次数</view>
+    <view wx:if="{{userPackage}}" class="package-stats">
+      <view class="stat-item">
+        <text class="stat-num">{{userPackage.one_to_one_remaining || 0}}</text>
+        <text class="stat-label">一对一剩余</text>
+      </view>
+      <view class="stat-item">
+        <text class="stat-num">{{userPackage.group_remaining || 0}}</text>
+        <text class="stat-label">一对多剩余</text>
+      </view>
+    </view>
+    <van-empty wx:else description="暂无有效次数包" />
+  </view> -->
 
   <view class="card">
     <van-cell title="编辑资料" is-link bind:click="goEditProfile" />

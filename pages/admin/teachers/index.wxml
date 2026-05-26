@@ -1,4 +1,6 @@
 <view class="container">
+  <view wx:if="{{mode === 'slots'}}" class="section-title">请选择咨询师，点击「管理档期」</view>
+
   <view class="card search-bar">
     <van-search
       value="{{ keyword }}"
@@ -36,8 +38,20 @@
           <van-tag wx:else type="default" size="medium">禁用</van-tag>
         </view>
         <text class="teacher-intro">{{item.intro || '暂无简介'}}</text>
+        <view class="teacher-actions">
+          <van-button
+            size="mini"
+            plain
+            type="primary"
+            catchtap="goSlots"
+            data-id="{{item._id}}"
+            data-name="{{item.name}}"
+          >
+            管理档期
+          </van-button>
+        </view>
       </view>
-      <text class="teacher-arrow">›</text>
+      <text class="teacher-arrow" data-id="{{item._id}}" bindtap="goEdit">›</text>
     </view>
   </view>
 

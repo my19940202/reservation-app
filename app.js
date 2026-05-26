@@ -10,8 +10,14 @@ App({
   },
 
   onLaunch: async function () {
+    this._resolveInit = null;
+    this.initPromise = new Promise((resolve) => {
+      this._resolveInit = resolve;
+    });
+
     if (!wx.cloud) {
       console.error('请使用 2.2.3 或以上基础库以使用云能力');
+      if (this._resolveInit) this._resolveInit();
       return;
     }
     const wxCloud = new wx.cloud.Cloud({
@@ -26,6 +32,12 @@ App({
       db,
     };
     this.fetchInitData();
+
+    if (this._resolveInit) this._resolveInit();
+  },
+
+  getInitPromise() {
+    return this.initPromise;
   },
 
   fetchInitData() {

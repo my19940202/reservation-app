@@ -1,0 +1,22 @@
+.content {
+  padding: 16rpx 0 32rpx;
+}
+
+.type-tabs {
+  margin: 8rpx 0;
+}
+
+.hint {
+  padding: 16rpx 32rpx 0;
+  font-size: 24rpx;
+  color: #999;
+  line-height: 1.5;
+}
+
+.button-container {
+  padding: 32rpx 32rpx 0;
+}
+
+.delete-btn {
+  margin-top: 24rpx !important;
+}

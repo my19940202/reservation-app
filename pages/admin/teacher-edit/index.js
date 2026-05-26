@@ -3,6 +3,8 @@ const { requireRole } = require('../../../utils/auth');
 const { showSuccess, showError } = require('../../../utils/index');
 const { ROLE } = require('../../../constants/enums');
 
+const app = getApp();
+
 Page({
   data: {
     id: '',
@@ -21,6 +23,7 @@ Page({
 
   onLoad(options) {
     if (!requireRole([ROLE.ADMIN])) return;
+    this.globalData = app.globalData;
     const id = options.id || '';
     this.setData({ id });
     if (id) {
@@ -78,20 +81,28 @@ Page({
     const filePath = file.url || file.path;
     if (!filePath) return;
 
+    const wxCloud = this.globalData && this.globalData.wxCloud;
+    if (!wxCloud) {
+      showError('云开发未初始化');
+      return;
+    }
+
     this.setData({ uploading: true });
     const ext = (filePath.match(/\.(\w+)$/) || [, 'jpg'])[1];
     const cloudPath = `teacher-avatars/${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
 
-    wx.cloud
-      .uploadFile({ cloudPath, filePath })
-      .then((res) => {
+    wxCloud.uploadFile({
+      cloudPath,
+      filePath,
+      success: (res) => {
         this.setData({
           avatar: res.fileID,
           fileList: [{ url: res.fileID, isImage: true }],
         });
-      })
-      .catch(() => showError('头像上传失败'))
-      .finally(() => this.setData({ uploading: false }));
+      },
+      fail: () => showError('头像上传失败'),
+      complete: () => this.setData({ uploading: false }),
+    });
   },
 
   onDeleteAvatar() {

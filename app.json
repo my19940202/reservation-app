@@ -15,7 +15,9 @@
     "pages/admin/user-appointments/index",
     "pages/admin/appointment-edit/index",
     "pages/admin/teachers/index",
-    "pages/admin/teacher-edit/index"
+    "pages/admin/teacher-edit/index",
+    "pages/admin/time-slots/index",
+    "pages/admin/time-slot-edit/index"
   ],
   "lazyCodeLoading": "requiredComponents",
   "usingComponents": {

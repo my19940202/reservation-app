@@ -1,4 +1,6 @@
 {
   "navigationBarTitleText": "预约咨询",
+  "enableShareAppMessage": true,
+  "enableShareTimeline": true,
   "usingComponents": {}
 }
