@@ -32,6 +32,10 @@ Page({
     wx.navigateTo({ url: '/pages/admin/index/index' });
   },
 
+  goEditProfile() {
+    wx.navigateTo({ url: '/pages/about/user/index' });
+  },
+
   goAdminTeacherAppointments() {
     wx.navigateTo({ url: '/pages/admin/teacher-appointments/index' });
   },
