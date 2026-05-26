@@ -7,10 +7,15 @@
     "pages/appointment-detail/index",
     "pages/verify/index",
     "pages/profile/index",
+    "pages/about/user/index",
+    "pages/about/user-terms/index",
+    "pages/about/user-privacy/index",
     "pages/admin/index/index",
     "pages/admin/teacher-appointments/index",
     "pages/admin/user-appointments/index",
-    "pages/admin/appointment-edit/index"
+    "pages/admin/appointment-edit/index",
+    "pages/admin/teachers/index",
+    "pages/admin/teacher-edit/index"
   ],
   "lazyCodeLoading": "requiredComponents",
   "usingComponents": {
@@ -30,7 +35,10 @@
     "van-field": "@vant/weapp/field/index",
     "van-picker": "@vant/weapp/picker/index",
     "van-popup": "@vant/weapp/popup/index",
-    "van-loading": "@vant/weapp/loading/index"
+    "van-loading": "@vant/weapp/loading/index",
+    "van-checkbox": "@vant/weapp/checkbox/index",
+    "van-uploader": "@vant/weapp/uploader/index",
+    "van-switch": "@vant/weapp/switch/index"
   },
   "window": {
     "backgroundColor": "#F6F6F6",

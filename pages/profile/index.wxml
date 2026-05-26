@@ -1,6 +1,7 @@
 <view class="container">
   <view class="card profile-header">
     <text class="profile-name">{{userInfo.name || '微信用户'}}</text>
+    <text wx:if="{{userInfo.phone}}" class="profile-phone">{{userInfo.phone}}</text>
     <text class="profile-role">{{userInfo.role === 'admin' ? '管理员' : userInfo.role === 'teacher' ? '咨询师' : '用户'}}</text>
   </view>
 
@@ -10,16 +11,14 @@
   </view>
 
   <view class="card">
+    <van-cell title="编辑资料" is-link bind:click="goEditProfile" />
     <van-cell title="我的预约" is-link bind:click="goAppointments" />
     <van-cell wx:if="{{isTeacher}}" title="待核销" is-link bind:click="goVerify" />
     <van-cell wx:if="{{isAdmin}}" title="管理后台" is-link bind:click="goAdmin" />
   </view>
 
   <view class="card">
-    <view class="section-title">Admin 页面</view>
-    <van-cell title="统计看板" label="admin/index" is-link bind:click="goAdmin" />
-    <van-cell title="咨询师预约管理" label="admin/teacher-appointments" is-link bind:click="goAdminTeacherAppointments" />
-    <van-cell title="用户预约查看" label="admin/user-appointments" is-link bind:click="goAdminUserAppointments" />
-    <van-cell title="编辑咨询记录" label="admin/appointment-edit（需预约 id）" is-link bind:click="goAdminAppointmentEdit" />
+    <van-cell title="用户服务协议" is-link bind:click="openTerms" />
+    <van-cell title="隐私政策说明" is-link bind:click="openPrivacy" />
   </view>
 </view>

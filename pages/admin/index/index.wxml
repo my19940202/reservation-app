@@ -31,6 +31,7 @@
   </view>
 
   <view class="card">
+    <van-cell title="咨询师管理" label="新增、编辑咨询师资料" is-link bind:click="goTeacherManagement" />
     <van-cell title="咨询师预约管理" label="查看并修改咨询记录" is-link bind:click="goTeacherAppointments" />
     <van-cell title="用户预约查看" label="只读查看用户预约" is-link bind:click="goUserAppointments" />
   </view>

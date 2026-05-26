@@ -1,0 +1,29 @@
+<scroll-view class="legal-page" scroll-y enhanced show-scrollbar="{{false}}">
+  <view class="legal-content">
+    <text class="legal-title">隐私政策说明</text>
+    <text class="legal-paragraph">本心理咨询室重视并保护用户的个人信息。本政策说明我们如何收集、使用、存储和保护您的信息。您使用本小程序即表示您已阅读并理解本政策。</text>
+
+    <text class="legal-section-title">一、我们收集的信息</text>
+    <text class="legal-item">(a) 微信登录信息：包括 openId 等，用于识别您的账号身份。</text>
+    <text class="legal-item">(b) 您主动填写的资料：姓名、手机号，用于预约确认、咨询师联系及服务通知。</text>
+    <text class="legal-item">(c) 业务相关信息：咨询预约记录、咨询类型（一对一/一对多）、次数包使用情况、预约状态等，用于提供预约与核销服务。</text>
+
+    <text class="legal-section-title">二、信息的使用</text>
+    <text class="legal-item">(a) 用于完成预约撮合、展示您的预约与剩余次数、支持咨询师核销及管理员代预约等核心功能。</text>
+    <text class="legal-item">(b) 用于改进服务质量与内部统计（如预约量、到场情况等），统计结果通常以汇总形式呈现。</text>
+    <text class="legal-item">(c) 未经您同意，我们不会向无关第三方出售、出租或交易您的个人信息，法律法规另有规定的除外。</text>
+
+    <text class="legal-section-title">三、信息的存储与安全</text>
+    <text class="legal-paragraph">您的信息存储于微信云开发平台，我们采取合理措施防止信息泄露、损毁或丢失。请妥善保管您的微信账号，避免他人未经授权使用。</text>
+
+    <text class="legal-section-title">四、您的权利</text>
+    <text class="legal-item">(a) 您可在「编辑资料」页面查询、更正姓名与手机号。</text>
+    <text class="legal-item">(b) 如需删除账号相关数据或行使其他法定权利，可通过心理咨询室官方渠道联系我们。</text>
+
+    <text class="legal-section-title">五、未成年人保护</text>
+    <text class="legal-paragraph">若您为未成年人，请在监护人同意并陪同下使用本服务。</text>
+
+    <text class="legal-section-title">六、政策更新</text>
+    <text class="legal-paragraph">我们可能适时修订本政策，修订后将通过小程序内页面公示。重大变更我们会以适当方式提醒您。</text>
+  </view>
+</scroll-view>

@@ -46,4 +46,8 @@ Page({
   goUserAppointments() {
     wx.navigateTo({ url: '/pages/admin/user-appointments/index' });
   },
+
+  goTeacherManagement() {
+    wx.navigateTo({ url: '/pages/admin/teachers/index' });
+  },
 });

@@ -1,0 +1,61 @@
+<view class="container">
+  <van-loading wx:if="{{loading}}" size="24px" vertical>加载中...</van-loading>
+
+  <view wx:else class="card content">
+    <view class="avatar-section">
+      <text class="avatar-label">头像</text>
+      <van-uploader
+        file-list="{{ fileList }}"
+        max-count="1"
+        deletable
+        bind:after-read="afterRead"
+        bind:delete="onDeleteAvatar"
+      />
+      <text wx:if="{{uploading}}" class="upload-tip">上传中...</text>
+    </view>
+
+    <van-cell-group>
+      <van-field
+        value="{{ name }}"
+        label="姓名"
+        required
+        maxlength="20"
+        placeholder="请输入咨询师姓名"
+        bind:change="onNameChange"
+      />
+      <van-field
+        value="{{ intro }}"
+        label="简介"
+        type="textarea"
+        maxlength="200"
+        placeholder="请输入简介（选填）"
+        autosize
+        bind:change="onIntroChange"
+      />
+    </van-cell-group>
+
+    <view class="types-section">
+      <text class="section-label">咨询类型</text>
+      <checkbox-group bindchange="onTypesChange">
+        <label class="type-item">
+          <checkbox value="oneToOne" checked="{{ typeOneToOne }}" color="#7B9E87" />
+          <text>一对一</text>
+        </label>
+        <label class="type-item">
+          <checkbox value="group" checked="{{ typeGroup }}" color="#7B9E87" />
+          <text>一对多</text>
+        </label>
+      </checkbox-group>
+    </view>
+
+    <van-cell title="启用状态" center>
+      <van-switch checked="{{ status === 'active' }}" size="24px" bind:change="onStatusChange" />
+    </van-cell>
+
+    <view class="button-container">
+      <van-button type="primary" block round loading="{{ submitting }}" bind:click="onSubmit">
+        保存
+      </van-button>
+    </view>
+  </view>
+</view>

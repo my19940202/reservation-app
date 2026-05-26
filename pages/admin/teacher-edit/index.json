@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "咨询师资料",
+  "usingComponents": {
+    "van-uploader": "@vant/weapp/uploader/index",
+    "van-switch": "@vant/weapp/switch/index"
+  }
+}

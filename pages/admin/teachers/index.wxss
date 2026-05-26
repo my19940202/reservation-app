@@ -1,0 +1,71 @@
+.search-bar {
+  margin-top: 24rpx;
+}
+
+.toolbar {
+  display: flex;
+  justify-content: flex-end;
+  padding: 0 24rpx 16rpx;
+}
+
+.teacher-item {
+  display: flex;
+  align-items: center;
+  padding: 24rpx 32rpx;
+  border-bottom: 1rpx solid #f5f5f5;
+}
+
+.teacher-item:last-child {
+  border-bottom: none;
+}
+
+.teacher-avatar {
+  width: 72rpx;
+  height: 72rpx;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.teacher-avatar--placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #e8f0ea;
+  color: #7b9e87;
+  font-size: 28rpx;
+  font-weight: 600;
+}
+
+.teacher-info {
+  flex: 1;
+  margin-left: 20rpx;
+  min-width: 0;
+}
+
+.teacher-name-row {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+}
+
+.teacher-name {
+  font-size: 30rpx;
+  font-weight: 600;
+  color: #333;
+}
+
+.teacher-intro {
+  display: block;
+  margin-top: 8rpx;
+  font-size: 24rpx;
+  color: #999;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.teacher-arrow {
+  margin-left: 12rpx;
+  font-size: 36rpx;
+  color: #ccc;
+}

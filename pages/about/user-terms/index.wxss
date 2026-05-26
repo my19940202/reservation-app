@@ -1,0 +1,32 @@
+.legal-page {
+  height: 100vh;
+  box-sizing: border-box;
+}
+
+.legal-content {
+  padding: 32rpx;
+}
+
+.legal-title {
+  display: block;
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 24rpx;
+}
+
+.legal-paragraph {
+  display: block;
+  font-size: 28rpx;
+  line-height: 1.8;
+  color: #444;
+  margin-bottom: 24rpx;
+}
+
+.legal-item {
+  display: block;
+  font-size: 28rpx;
+  line-height: 1.8;
+  color: #444;
+  margin-bottom: 16rpx;
+}

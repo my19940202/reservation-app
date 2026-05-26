@@ -61,6 +61,56 @@ async function listByUser(keyword) {
   return { list };
 }
 
+async function listTeachers(keyword) {
+  const collection = db.collection(C.TEACHERS);
+  const query = keyword
+    ? collection.where({ name: db.RegExp({ regexp: keyword, options: 'i' }) })
+    : collection;
+  const res = await query.orderBy('created_at', 'desc').limit(100).get();
+  return { list: res.data || [] };
+}
+
+async function getTeacherById(teacherId) {
+  if (!teacherId) throw new Error('缺少咨询师 ID');
+  const res = await db.collection(C.TEACHERS).doc(teacherId).get();
+  if (!res.data) throw new Error('咨询师不存在');
+  return { teacher: res.data };
+}
+
+async function addTeacher(data) {
+  const { name, avatar, intro, types, status } = data;
+  if (!name || !String(name).trim()) throw new Error('姓名不能为空');
+  const res = await db.collection(C.TEACHERS).add({
+    data: {
+      name: String(name).trim(),
+      avatar: avatar || '',
+      intro: intro || '',
+      types: Array.isArray(types) && types.length ? types : ['oneToOne'],
+      status: status || 'active',
+      created_at: db.serverDate(),
+      updated_at: db.serverDate(),
+    },
+  });
+  return { teacherId: res._id };
+}
+
+async function updateTeacher(data) {
+  const { teacherId, name, avatar, intro, types, status } = data;
+  if (!teacherId) throw new Error('缺少咨询师 ID');
+  if (!name || !String(name).trim()) throw new Error('姓名不能为空');
+  await db.collection(C.TEACHERS).doc(teacherId).update({
+    data: {
+      name: String(name).trim(),
+      avatar: avatar || '',
+      intro: intro || '',
+      types: Array.isArray(types) ? types : [],
+      status: status || 'inactive',
+      updated_at: db.serverDate(),
+    },
+  });
+  return { success: true };
+}
+
 async function updateAppointment(openId, data) {
   const { appointmentId, status, adminNote } = data;
   const apptRes = await db.collection(C.APPOINTMENTS).doc(appointmentId).get();
@@ -151,6 +201,14 @@ exports.main = async (event) => {
         return await listByUser(event.keyword);
       case 'updateAppointment':
         return await updateAppointment(openId, event);
+      case 'listTeachers':
+        return await listTeachers(event.keyword);
+      case 'getTeacherById':
+        return await getTeacherById(event.teacherId);
+      case 'addTeacher':
+        return await addTeacher(event);
+      case 'updateTeacher':
+        return await updateTeacher(event);
       default:
         return { error: 'Invalid action' };
     }
