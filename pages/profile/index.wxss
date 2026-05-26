@@ -1,0 +1,16 @@
+.profile-header {
+  padding: 48rpx 32rpx;
+}
+
+.profile-name {
+  display: block;
+  font-size: 36rpx;
+  font-weight: 600;
+}
+
+.profile-role {
+  display: block;
+  margin-top: 8rpx;
+  font-size: 24rpx;
+  color: #999;
+}

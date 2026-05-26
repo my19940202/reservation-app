@@ -1,0 +1,33 @@
+/** app.wxss **/
+page {
+  background: #f6f6f6;
+  font-size: 28rpx;
+  color: #333;
+}
+
+.container {
+  min-height: 100vh;
+  box-sizing: border-box;
+  padding-bottom: 40rpx;
+}
+
+.section-title {
+  padding: 24rpx 32rpx 12rpx;
+  font-size: 26rpx;
+  color: #999;
+}
+
+.card {
+  margin: 0 24rpx 24rpx;
+  background: #fff;
+  border-radius: 16rpx;
+  overflow: hidden;
+}
+
+.stats-grid {
+  padding: 16rpx 0;
+}
+
+.empty-wrap {
+  padding: 80rpx 0;
+}

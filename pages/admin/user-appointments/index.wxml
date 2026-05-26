@@ -1,0 +1,20 @@
+<view class="container">
+  <view class="card search-bar">
+    <van-search value="{{keyword}}" placeholder="输入用户姓名或手机号" bind:change="onSearch" bind:search="doSearch" />
+  </view>
+
+  <van-loading wx:if="{{loading}}" size="24px" vertical>搜索中...</van-loading>
+  <view wx:elif="{{list.length}}" class="card">
+    <van-cell
+      wx:for="{{list}}"
+      wx:key="_id"
+      title="{{item.user_name || '用户'}}"
+      label="{{item.teacher_name}} · {{item.date}} {{item.start_time}}"
+      value="{{statusLabel[item.status]}}"
+      is-link
+      data-id="{{item._id}}"
+      bind:click="goDetail"
+    />
+  </view>
+  <van-empty wx:else class="empty-wrap" description="搜索用户预约记录" />
+</view>

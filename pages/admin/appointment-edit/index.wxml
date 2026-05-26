@@ -1,0 +1,45 @@
+<view class="container">
+  <van-loading wx:if="{{loading}}" size="24px" vertical>加载中...</van-loading>
+
+  <view wx:elif="{{detail}}" class="card">
+    <van-cell-group>
+      <van-cell title="用户" value="{{detail.user_name}}" />
+      <van-cell title="咨询师" value="{{detail.teacher_name}}" />
+      <van-cell title="日期" value="{{detail.date}}" />
+      <van-cell title="时段" value="{{detail.start_time}} - {{detail.end_time}}" />
+      <van-cell title="类型" value="{{typeLabel[detail.type]}}" />
+      <van-cell
+        wx:if="{{detail.status !== 'completed'}}"
+        title="状态"
+        value="{{statusLabel[selectedStatus]}}"
+        is-link
+        bind:click="openStatusPicker"
+      />
+      <van-cell wx:else title="状态" value="{{statusLabel[detail.status]}}" />
+    </van-cell-group>
+  </view>
+
+  <view wx:if="{{detail}}" class="card">
+    <van-field
+      value="{{adminNote}}"
+      label="管理员备注"
+      type="textarea"
+      placeholder="填写备注"
+      autosize
+      bind:change="onNoteChange"
+    />
+  </view>
+
+  <view wx:if="{{detail}}" class="footer-btn">
+    <van-button type="primary" block round loading="{{saving}}" bind:click="save">保存</van-button>
+  </view>
+
+  <van-popup show="{{showStatusPicker}}" position="bottom" bind:close="closeStatusPicker">
+    <van-picker
+      columns="{{statusOptions}}"
+      value-key="text"
+      bind:confirm="onStatusConfirm"
+      bind:cancel="closeStatusPicker"
+    />
+  </van-popup>
+</view>

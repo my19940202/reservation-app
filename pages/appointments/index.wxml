@@ -1,0 +1,16 @@
+<view class="container">
+  <van-loading wx:if="{{loading}}" size="24px" vertical>加载中...</van-loading>
+  <view wx:elif="{{list.length}}" class="card">
+    <van-cell
+      wx:for="{{list}}"
+      wx:key="_id"
+      title="{{item.teacher_name || '咨询师'}}"
+      label="{{item.date}} {{item.start_time}} · {{typeLabel[item.type]}}"
+      value="{{statusLabel[item.status]}}"
+      is-link
+      data-id="{{item._id}}"
+      bind:click="goDetail"
+    />
+  </view>
+  <van-empty wx:else class="empty-wrap" description="暂无预约" />
+</view>

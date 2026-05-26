@@ -1,0 +1,23 @@
+.verify-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24rpx 32rpx;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.verify-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.verify-name {
+  font-size: 30rpx;
+  font-weight: 500;
+}
+
+.verify-meta {
+  margin-top: 8rpx;
+  font-size: 24rpx;
+  color: #999;
+}

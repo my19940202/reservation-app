@@ -1,0 +1,13 @@
+<view class="container">
+  <van-loading wx:if="{{loading}}" size="24px" vertical>加载中...</van-loading>
+  <view wx:elif="{{list.length}}" class="card">
+    <view wx:for="{{list}}" wx:key="_id" class="verify-item">
+      <view class="verify-info">
+        <text class="verify-name">{{item.user_name || '用户'}}</text>
+        <text class="verify-meta">{{item.date}} {{item.start_time}} · {{typeLabel[item.type]}}</text>
+      </view>
+      <van-button size="small" type="primary" round data-id="{{item._id}}" bind:click="verify">核销</van-button>
+    </view>
+  </view>
+  <van-empty wx:else class="empty-wrap" description="暂无待核销预约" />
+</view>

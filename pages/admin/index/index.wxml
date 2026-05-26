@@ -1,0 +1,37 @@
+<view class="container">
+  <van-loading wx:if="{{loading}}" size="24px" vertical>加载中...</van-loading>
+
+  <view wx:else class="card stats-grid">
+    <van-grid column-num="3" border="{{false}}">
+      <van-grid-item text="用户" use-slot>
+        <view class="grid-num">{{stats.userCount}}</view>
+        <view class="grid-label">用户</view>
+      </van-grid-item>
+      <van-grid-item use-slot>
+        <view class="grid-num">{{stats.teacherCount}}</view>
+        <view class="grid-label">咨询师</view>
+      </van-grid-item>
+      <van-grid-item use-slot>
+        <view class="grid-num">{{stats.appointmentTotal}}</view>
+        <view class="grid-label">预约总数</view>
+      </van-grid-item>
+      <van-grid-item use-slot>
+        <view class="grid-num">{{stats.bookedCount}}</view>
+        <view class="grid-label">待咨询</view>
+      </van-grid-item>
+      <van-grid-item use-slot>
+        <view class="grid-num">{{stats.completedCount}}</view>
+        <view class="grid-label">已完成</view>
+      </van-grid-item>
+      <van-grid-item use-slot>
+        <view class="grid-num">{{stats.cancelledCount}}</view>
+        <view class="grid-label">已取消</view>
+      </van-grid-item>
+    </van-grid>
+  </view>
+
+  <view class="card">
+    <van-cell title="咨询师预约管理" label="查看并修改咨询记录" is-link bind:click="goTeacherAppointments" />
+    <van-cell title="用户预约查看" label="只读查看用户预约" is-link bind:click="goUserAppointments" />
+  </view>
+</view>

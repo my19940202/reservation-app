@@ -1,0 +1,22 @@
+<view class="container">
+  <view class="card filter-bar">
+    <picker mode="selector" range="{{teachers}}" range-key="name" bindchange="onTeacherChange">
+      <van-cell title="选择咨询师" is-link value="{{teachers.length ? '切换' : '暂无'}}" />
+    </picker>
+  </view>
+
+  <van-loading wx:if="{{loading}}" size="24px" vertical>加载中...</van-loading>
+  <view wx:elif="{{list.length}}" class="card">
+    <van-cell
+      wx:for="{{list}}"
+      wx:key="_id"
+      title="{{item.user_name || '用户'}}"
+      label="{{item.date}} {{item.start_time}} · {{typeLabel[item.type]}}"
+      value="{{statusLabel[item.status]}}"
+      is-link
+      data-id="{{item._id}}"
+      bind:click="goEdit"
+    />
+  </view>
+  <van-empty wx:else class="empty-wrap" description="暂无预约记录" />
+</view>

@@ -1,0 +1,32 @@
+<view class="container">
+  <view class="section-title">咨询师：{{teacherName}}</view>
+
+  <view class="card type-tabs">
+    <van-tabs active="{{consultType === 'oneToOne' ? 0 : 1}}" bind:change="onTypeChange">
+      <van-tab title="一对一" name="oneToOne" />
+      <van-tab title="一对多" name="group" />
+    </van-tabs>
+  </view>
+
+  <van-loading wx:if="{{loading}}" size="24px" vertical>加载时段...</van-loading>
+
+  <view wx:elif="{{slots.length}}" class="card slot-list">
+    <view
+      wx:for="{{slots}}"
+      wx:key="_id"
+      class="slot-item {{selectedSlotId === item._id ? 'active' : ''}}"
+      data-id="{{item._id}}"
+      bindtap="selectSlot"
+    >
+      <text>{{item.date}} {{item.start_time}}-{{item.end_time}}</text>
+      <van-tag type="primary" plain>余{{item.capacity - item.booked_count}}</van-tag>
+    </view>
+  </view>
+  <van-empty wx:else description="暂无可预约时段" />
+
+  <view class="footer-btn">
+    <van-button type="primary" block round disabled="{{!selectedSlotId || submitting}}" bind:click="submitBooking">
+      确认预约
+    </van-button>
+  </view>
+</view>

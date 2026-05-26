@@ -1,0 +1,17 @@
+<view class="container">
+  <van-loading wx:if="{{loading}}" size="24px" vertical>加载中...</van-loading>
+  <view wx:elif="{{detail}}" class="card">
+    <van-cell-group>
+      <van-cell title="咨询师" value="{{detail.teacher_name}}" />
+      <van-cell title="日期" value="{{detail.date}}" />
+      <van-cell title="时段" value="{{detail.start_time}} - {{detail.end_time}}" />
+      <van-cell title="类型" value="{{typeLabel[detail.type]}}" />
+      <van-cell title="状态" value="{{statusLabel[detail.status]}}" />
+      <van-cell wx:if="{{detail.admin_note}}" title="备注" value="{{detail.admin_note}}" />
+    </van-cell-group>
+  </view>
+
+  <view wx:if="{{detail && detail.status === 'booked' && !readonly}}" class="footer-btn">
+    <van-button type="danger" block round bind:click="cancelAppointment">取消预约</van-button>
+  </view>
+</view>

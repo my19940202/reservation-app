@@ -1,0 +1,23 @@
+.type-tabs {
+  margin-bottom: 0;
+}
+
+.slot-list {
+  padding: 16rpx 0;
+}
+
+.slot-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24rpx 32rpx;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.slot-item.active {
+  background: rgba(123, 158, 135, 0.1);
+}
+
+.footer-btn {
+  padding: 32rpx 24rpx;
+}

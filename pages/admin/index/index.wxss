@@ -1,0 +1,13 @@
+.grid-num {
+  font-size: 40rpx;
+  font-weight: 700;
+  color: #7B9E87;
+  text-align: center;
+}
+
+.grid-label {
+  margin-top: 8rpx;
+  font-size: 24rpx;
+  color: #999;
+  text-align: center;
+}
